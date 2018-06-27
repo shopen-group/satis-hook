@@ -54,7 +54,7 @@ class Hook
     public function isAllowed(): bool
     {
         // Check HTTP method
-        if (!$this->request->isMethod('GET')) {
+        if (!$this->request->isMethod('GET') && !$this->request->isMethod('POST')) {
             return false;
         }
 
