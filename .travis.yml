@@ -1,0 +1,15 @@
+language: php
+
+php:
+  - 7.1
+
+install:
+  - composer install --prefer-source
+
+script:
+  - vendor/bin/ecs check src tests
+  - vendor/bin/phpstan analyse src --level 7
+  - vendor/bin/phpunit tests
+
+notifications:
+  email: never
