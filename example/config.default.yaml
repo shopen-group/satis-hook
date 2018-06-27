@@ -1,0 +1,11 @@
+secret:
+  enabled: true
+  location: param
+  value: veslo
+  name: key
+
+satis:
+  php: /usr/bin/php
+  bin: ../satis/bin/satis
+  config: ../satis.json
+  output: ../web

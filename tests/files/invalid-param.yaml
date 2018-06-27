@@ -1,0 +1,5 @@
+secret:
+  enabled: true
+  location: invalid-location
+  value: veslo
+  name: key

@@ -1,0 +1,6 @@
+secret:
+  enabled: true
+  location: param
+  value: veslo
+  name: key
+
