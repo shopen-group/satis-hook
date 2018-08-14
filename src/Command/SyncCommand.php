@@ -48,8 +48,10 @@ class SyncCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln([
-            '<info>SatisHook - Watching</info>',
-            '<info>====================</info>',
+            '',
+            '<comment>========================================</comment>',
+            '<comment>           SatisHook - Watching         </comment>',
+            '<comment>========================================</comment>',
             '',
         ]);
 
@@ -59,7 +61,9 @@ class SyncCommand extends Command
 
             foreach ($finder as $file) {
                 try {
+                    $output->writeln(date('Y-m-d h:i:s') . ': Starting build ' . $file->getBasename());
                     $this->process->build((string)$file->getRealPath());
+                    $output->writeln('<info>' . date('Y-m-d H:i:s') . ': Build finished</info>');
                 } catch (GeneralException $e) {
                     $output->writeln('<error>' . $e->getMessage() . '</error>');
                     exit(1);

@@ -34,6 +34,7 @@ class Process
         $process = new Symfony\Component\Process\Process($processArguments);
         try {
             $process->mustRun();
+            unlink($filePath);
         } catch (ProcessFailedException $exception) {
             throw new GeneralException($exception->getMessage());
         }
