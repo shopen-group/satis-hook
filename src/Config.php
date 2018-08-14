@@ -6,6 +6,10 @@ use ShopenGroup\SatisHook\Exception\ConfigException;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class Config
+ * @package ShopenGroup\SatisHook
+ */
 class Config
 {
     public const LOCATION_HEADER = 'header';

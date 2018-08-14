@@ -3,11 +3,12 @@
 namespace ShopenGroup\SatisHook;
 
 use Nette\Http\Request;
-use ShopenGroup\SatisHook\Exception\GeneralException;
 use ShopenGroup\SatisHook\Exception\SecurityException;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
+/**
+ * Class Hook
+ * @package ShopenGroup\SatisHook
+ */
 class Hook
 {
     /**
@@ -21,30 +22,35 @@ class Hook
     private $config;
 
     /**
+     * @var string
+     */
+    private $hookFilesPath;
+
+    /**
      * Hook constructor.
      */
-    public function __construct(Config $config, Request $request)
+    public function __construct(Config $config, Request $request, string $hookFilesPath)
     {
         $this->request = $request;
         $this->config = $config;
+        $this->hookFilesPath = $hookFilesPath;
     }
 
-    /**
-     * @throws GeneralException
-     * @throws SecurityException
-     */
     public function process(): void
     {
         if (!$this->isAllowed()) {
             throw new SecurityException('You are not allowed to view this resource.', 401);
         }
 
-        $processArguments = $this->getProcessArguments();
-        $process = new Process($processArguments);
-        try {
-            $process->mustRun();
-        } catch (ProcessFailedException $exception) {
-            throw new GeneralException($exception->getMessage());
+        $dateTime = new \DateTime();
+
+        $filename = $this->hookFilesPath . '/' . $dateTime->format('Y-m-d-H-i-s') . '.' . uniqid() . '.req';
+
+        $repositoryName = $this->request->getQuery('repository');
+        if ($repositoryName) {
+            file_put_contents($filename, $repositoryName);
+        } else {
+            touch($filename);
         }
     }
 
@@ -80,28 +86,5 @@ class Hook
         }
 
         return false;
-    }
-
-    /**
-     * @return string[]
-     */
-    private function getProcessArguments(): array
-    {
-        $arguments = [
-            $this->config->getConfig()['satis']['php'],
-            $this->config->getConfig()['satis']['bin'],
-            'build',
-            $this->config->getConfig()['satis']['config'],
-            $this->config->getConfig()['satis']['output']
-        ];
-
-        $repositoryName = $this->request->getQuery('repository');
-        if ($repositoryName) {
-            $arguments[] = $repositoryName;
-        }
-
-        $arguments[] = '-n';
-
-        return $arguments;
     }
 }
