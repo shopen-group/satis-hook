@@ -33,7 +33,7 @@ satis:
 
 Our entrypoint will be `hook.php` which is publicly accessible via HTTP.
 
-ApplicationFactory::createApplication has three parameters. You can customise first two of them.
+ApplicationFactory::createApplication has three parameters. You can customise the first two of them.
 * path to config.yaml
 * path to __writable__ TEMP folder (for storing requests)
 
@@ -51,14 +51,14 @@ $application->run();
 ## Usage
 
 ### Webhook
-App is accepting GET and POST requests through `https://127.0.0.1/hook.php`.
-There is optional parameter "repository". If is parameter present in request you can build just one particular package - not all of them (`http:/127.0.0.1/hook.php?repository=package/name`).
+The app is accepting GET and POST requests through `https://127.0.0.1/hook.php`.
+There is an optional parameter "repository". If the "repository" parameter is present in request you can build just one particular package - not necessarily all of them (`http:/127.0.0.1/hook.php?repository=package/name`).
 
 ### Queue process
-There is second "layer" of application - queue processing.
-To start processing accepted requests you have to run command bellow via CLI.
+There is a second "layer" of application - queue processing.
+To start processing accepted requests you have to run command below via CLI.
 ```bash
 php hook.php satis-hook:build
 ```
 
-We are using [supervisord](http://supervisord.org) to keep queue processing up.
+We use [supervisord](http://supervisord.org) to keep queue processing up.
