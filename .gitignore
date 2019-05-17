@@ -4,3 +4,7 @@ composer.lock
 
 # IDE
 .idea
+
+# Dev files
+index.php
+temp
