@@ -8,4 +8,5 @@ composer.lock
 # Dev files
 hook.php
 temp
+logs
 config.yaml

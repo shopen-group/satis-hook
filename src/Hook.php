@@ -61,7 +61,7 @@ class Hook
             $repositoryUrl = $this->requestTypeResolver->getRequest($this->request)->getRepositoryUrl();
 
             if (!$this->config->isRepositoryInSatisConfig($repositoryUrl)) {
-                throw new ConfigException('Tududumtum.', 401);
+                throw new ConfigException(sprintf('There is no repository with url "%s".', $repositoryUrl), 401);
             }
 
             file_put_contents($filename, $repositoryUrl);

@@ -6,7 +6,7 @@ namespace ShopenGroup\SatisHook;
  * Interface IApplication
  * @package ShopenGroup\SatisHook
  */
-interface IApplication
+interface ApplicationInterface
 {
     /**
      * Runs application
