@@ -45,7 +45,6 @@ class Application implements ApplicationInterface
 
     /**
      * Application constructor.
-     * @param string $hookFilesPath
      */
     public function __construct(
         Nette\Http\Request $request,
