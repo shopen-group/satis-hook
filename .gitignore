@@ -7,5 +7,7 @@ composer.lock
 
 # Dev files
 hook.php
+!example/hook.php
 temp
+logs
 config.yaml

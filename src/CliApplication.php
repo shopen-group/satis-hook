@@ -2,6 +2,7 @@
 
 namespace ShopenGroup\SatisHook;
 
+use Psr\Log\LoggerInterface;
 use ShopenGroup\SatisHook\Command\SyncCommand;
 use Symfony;
 
@@ -9,7 +10,7 @@ use Symfony;
  * Class CliApplication
  * @package ShopenGroup\SatisHook
  */
-class CliApplication implements IApplication
+class CliApplication implements ApplicationInterface
 {
     /**
      * @var Config
@@ -26,10 +27,19 @@ class CliApplication implements IApplication
      */
     private $consoleApplication;
 
-    public function __construct(string $configPath, string $hookFilesPath)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(LoggerInterface $logger, string $configPath, string $hookFilesPath)
     {
+        $this->logger = $logger;
+
         if (!is_dir($hookFilesPath) || !is_writable($hookFilesPath)) {
-            echo "Hook files path error.";
+            $msg = "Hook files path error.";
+            $this->logger->critical($msg);
+            echo $msg;
             exit(1);
         }
 
@@ -38,6 +48,7 @@ class CliApplication implements IApplication
         try {
             $this->config = new \ShopenGroup\SatisHook\Config($configPath);
         } catch (\ShopenGroup\SatisHook\Exception\ConfigException $configException) {
+            $this->logger->error($configException->getMessage());
             echo $configException->getMessage();
             exit(1);
         }

@@ -3,6 +3,7 @@
 namespace ShopenGroup\SatisHook;
 
 use Nette;
+use Psr\Log\LoggerInterface;
 use ShopenGroup\SatisHook\Exception\ConfigException;
 use ShopenGroup\SatisHook\Exception\GeneralException;
 
@@ -10,7 +11,7 @@ use ShopenGroup\SatisHook\Exception\GeneralException;
  * Class Application
  * @package ShopenGroup\SatisHook
  */
-class Application implements IApplication
+class Application implements ApplicationInterface
 {
     /**
      * @var Config
@@ -33,6 +34,11 @@ class Application implements IApplication
     private $response;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @var string
      */
     private $hookFilesPath;
@@ -44,12 +50,14 @@ class Application implements IApplication
         Nette\Http\Request $request,
         Nette\Http\Response $response,
         RequestTypeResolver $requestTypeResolver,
+        LoggerInterface $logger,
         string $configPath,
         string $hookFilesPath
     ) {
         $this->request = $request;
         $this->response = $response;
         $this->requestTypeResolver = $requestTypeResolver;
+        $this->logger = $logger;
 
         if (!is_dir($hookFilesPath) || !is_writable($hookFilesPath)) {
             $this->response->setCode(500);
@@ -77,7 +85,10 @@ class Application implements IApplication
 
         try {
             $hook->process();
-            echo date('[Y-m-d H:i:s]') . ' Hook succeeded.';
+            $msg = date('[Y-m-d H:i:s]') . ' Hook succeeded.';
+
+            $this->logger->info($msg);
+            echo $msg;
         } catch (GeneralException $e) {
             if ($e->getCode() > 0) {
                 $this->response->setCode(400);
@@ -85,7 +96,9 @@ class Application implements IApplication
                 $this->response->setCode($e->getCode());
             }
 
-            echo get_class($e) . ': ' . $e->getMessage();
+            $msg = get_class($e) . ': ' . $e->getMessage();
+            $this->logger->error($msg);
+            echo $msg;
             exit(1);
         }
     }
