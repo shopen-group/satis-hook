@@ -1,0 +1,36 @@
+{
+  "name": "Shopen Group repository",
+  "homepage": "https://repo.shopen.cz",
+  "repositories": [
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/theme-frontend-b2b.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/theme-frontend-bagalio.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-workplaces.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-restricted-access.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-public-holiday.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-flexibee-core.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-manufacturer-restriction.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-video-plugin.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-heureka.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-bagalio.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-feeds.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-carriers.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-cj-scripts.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/gopay.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-shipping-payment-ties.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-shop-by-brand-enhanced.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-load-optimalization.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-product-question.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-mageplaza-blog-enhanced.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-payment-page.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-payment-fee.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-admin-product-view.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-email-attachments.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-pci.git" }
+  ],
+  "require-all": true,
+  "archive": {
+    "directory": "dist",
+    "format": "zip",
+    "skip-dev": false
+  }
+}

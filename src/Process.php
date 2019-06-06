@@ -32,6 +32,7 @@ class Process
         $processArguments = $this->getProcessArguments($fileContent);
 
         $process = new Symfony\Component\Process\Process($processArguments);
+
         try {
             $process->mustRun();
             unlink($filePath);
@@ -47,14 +48,15 @@ class Process
     private function getProcessArguments(?string $repositoryName): array
     {
         $arguments = [
-            $this->config->getConfig()['satis']['php'],
-            $this->config->getConfig()['satis']['bin'],
+            $this->config->getSatisPhpPath(),
+            $this->config->getSatisBinPath(),
             'build',
-            $this->config->getConfig()['satis']['config'],
-            $this->config->getConfig()['satis']['output']
+            $this->config->getSatisConfigPath(),
+            $this->config->getSatisOutputPath()
         ];
 
         if (!empty($repositoryName)) {
+            $arguments[] = '--repository-url';
             $arguments[] = $repositoryName;
         }
 

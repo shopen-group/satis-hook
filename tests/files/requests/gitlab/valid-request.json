@@ -1,0 +1,94 @@
+{
+  "object_kind": "push",
+  "event_name": "push",
+  "before": "8f794745764127163f0a1a0a66731f3c9b2b9a3a",
+  "after": "b47bf2377f811db10cf975aef35a8ac1edb88bba",
+  "ref": "refs/heads/master",
+  "checkout_sha": "b47bf2377f811db10cf975aef35a8ac1edb88bba",
+  "message": null,
+  "user_id": 9999999,
+  "user_name": "Joh Doe",
+  "user_username": "johndoe",
+  "user_email": "",
+  "user_avatar": "https://secure.gravatar.com/avatar/2108599819e0794a6549a0b62abefc56?s=80\u0026d=identicon",
+  "project_id": 8171639,
+  "project": {
+    "id": 8171639,
+    "name": "module-test-plugin",
+    "description": "",
+    "web_url": "https://gitlab.com/shopen-group/modules/module-test-plugin",
+    "avatar_url": null,
+    "git_ssh_url": "git@gitlab.com:shopen-group/modules/module-test-plugin.git",
+    "git_http_url": "https://gitlab.com/shopen-group/modules/module-test-plugin.git",
+    "namespace": "Modules",
+    "visibility_level": 0,
+    "path_with_namespace": "shopen-group/modules/module-test-plugin",
+    "default_branch": "master",
+    "ci_config_path": null,
+    "homepage": "https://gitlab.com/shopen-group/modules/module-test-plugin",
+    "url": "git@gitlab.com:shopen-group/modules/module-test-plugin.git",
+    "ssh_url": "git@gitlab.com:shopen-group/modules/module-test-plugin.git",
+    "http_url": "https://gitlab.com/shopen-group/modules/module-test-plugin.git"
+  },
+  "commits": [
+    {
+      "id": "b47bf2377f811db10cf975aef35a8ac1edb88bba",
+      "message": "Merge branch 'release/0.1.1'\n",
+      "timestamp": "2019-02-18T13:15:46Z",
+      "url": "https://gitlab.com/shopen-group/modules/module-test-plugin/commit/b47bf2377f811db10cf975aef35a8ac1edb88bba",
+      "author": {
+        "name": "Joh Doe",
+        "email": "hello@example.com"
+      },
+      "added": [],
+      "modified": [
+        "Plugin/Catalog/Model/Product.php",
+        "composer.json",
+        "etc/module.xml"
+      ],
+      "removed": []
+    },
+    {
+      "id": "e88dcc78ceef8cedbf93a882dac9e5574bac7fb5",
+      "message": "0.1.1\n",
+      "timestamp": "2019-02-18T13:15:40Z",
+      "url": "https://gitlab.com/shopen-group/modules/module-test-plugin/commit/e88dcc78ceef8cedbf93a882dac9e5574bac7fb5",
+      "author": {
+        "name": "Joh Doe",
+        "email": "hello@example.com"
+      },
+      "added": [],
+      "modified": [
+        "composer.json",
+        "etc/module.xml"
+      ],
+      "removed": []
+    },
+    {
+      "id": "8f794745764127163f0a1a0a66731f3c9b2b9a3a",
+      "message": "Create new product fix\n",
+      "timestamp": "2019-02-18T13:15:00Z",
+      "url": "https://gitlab.com/shopen-group/modules/module-test-plugin/commit/8f794745764127163f0a1a0a66731f3c9b2b9a3a",
+      "author": {
+        "name": "Joh Doe",
+        "email": "hello@example.com"
+      },
+      "added": [],
+      "modified": [
+        "Plugin/Catalog/Model/Product.php"
+      ],
+      "removed": []
+    }
+  ],
+  "total_commits_count": 3,
+  "push_options": {},
+  "repository": {
+    "name": "module-test-plugin",
+    "url": "git@gitlab.com:shopen-group/modules/module-test-plugin.git",
+    "description": "",
+    "homepage": "https://gitlab.com/shopen-group/modules/module-test-plugin",
+    "git_http_url": "https://gitlab.com/shopen-group/modules/module-test-plugin.git",
+    "git_ssh_url": "git@gitlab.com:shopen-group/modules/module-test-plugin.git",
+    "visibility_level": 0
+  }
+}

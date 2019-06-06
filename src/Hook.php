@@ -3,6 +3,7 @@
 namespace ShopenGroup\SatisHook;
 
 use Nette\Http\Request;
+use ShopenGroup\SatisHook\Exception\ConfigException;
 use ShopenGroup\SatisHook\Exception\SecurityException;
 
 /**
@@ -22,6 +23,11 @@ class Hook
     private $config;
 
     /**
+     * @var RequestTypeResolver
+     */
+    private $requestTypeResolver;
+
+    /**
      * @var string
      */
     private $hookFilesPath;
@@ -29,10 +35,11 @@ class Hook
     /**
      * Hook constructor.
      */
-    public function __construct(Config $config, Request $request, string $hookFilesPath)
+    public function __construct(Config $config, Request $request, RequestTypeResolver $requestTypeResolver, string $hookFilesPath)
     {
         $this->request = $request;
         $this->config = $config;
+        $this->requestTypeResolver = $requestTypeResolver;
         $this->hookFilesPath = $hookFilesPath;
     }
 
@@ -46,11 +53,18 @@ class Hook
 
         $filename = $this->hookFilesPath . '/' . $dateTime->format('Y-m-d-H-i-s') . '.' . uniqid() . '.req';
 
-        $repositoryName = $this->request->getQuery('repository');
-        if ($repositoryName) {
-            file_put_contents($filename, $repositoryName);
-        } else {
+        $buildAll = $this->request->getQuery('build-all');
+
+        if ($buildAll !== null) {
             touch($filename);
+        } else {
+            $repositoryUrl = $this->requestTypeResolver->getRequest($this->request)->getRepositoryUrl();
+
+            if (!$this->config->isRepositoryInSatisConfig($repositoryUrl)) {
+                throw new ConfigException('Tududumtum.', 401);
+            }
+
+            file_put_contents($filename, $repositoryUrl);
         }
     }
 
@@ -65,22 +79,22 @@ class Hook
         }
 
         // Check enabled secret token
-        if (!$this->config->getConfig()['secret']['enabled']) {
+        if (!$this->config->isSecretEnabled()) {
             return true;
         }
 
         // Header secret check
-        if ($this->config->getConfig()['secret']['location'] === Config::LOCATION_HEADER) {
-            $headerKey = $this->request->getHeader($this->config->getConfig()['secret']['name']);
-            if ($headerKey === $this->config->getConfig()['secret']['value']) {
+        if ($this->config->getSecretLocationPath() === Config::LOCATION_HEADER) {
+            $headerKey = $this->request->getHeader($this->config->getSecretName());
+            if ($headerKey === $this->config->getSecretValue()) {
                 return true;
             }
         }
 
         // Param query secret check
-        if ($this->config->getConfig()['secret']['location'] === Config::LOCATION_PARAM) {
-            $paramKey = $this->request->getQuery($this->config->getConfig()['secret']['name']);
-            if ($paramKey === $this->config->getConfig()['secret']['value']) {
+        if ($this->config->getSecretLocationPath() === Config::LOCATION_PARAM) {
+            $paramKey = $this->request->getQuery($this->config->getSecretName());
+            if ($paramKey === $this->config->getSecretValue()) {
                 return true;
             }
         }

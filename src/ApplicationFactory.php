@@ -21,10 +21,11 @@ class ApplicationFactory
         }
 
         $response = new \Nette\Http\Response;
-        $requestFactory = new \Nette\Http\RequestFactory();
+        $requestFactory = new \Nette\Http\RequestFactory;
+        $requestTypeResolver = new RequestTypeResolver;
 
         $request = $requestFactory->createHttpRequest();
 
-        return new Application($request, $response, $configPath, $hookFilesPath);
+        return new Application($request, $response, $requestTypeResolver, $configPath, $hookFilesPath);
     }
 }

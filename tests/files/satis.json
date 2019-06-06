@@ -1,0 +1,15 @@
+{
+  "name": "My Repository",
+  "homepage": "https://repo.example.com",
+  "repositories": [
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/theme-one.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/theme-two.git" },
+    { "type": "vcs", "url": "git@gitlab.com:shopen-group/modules/module-test.git" }
+  ],
+  "require-all": true,
+  "archive": {
+    "directory": "dist",
+    "format": "zip",
+    "skip-dev": false
+  }
+}

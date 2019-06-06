@@ -41,15 +41,15 @@ class ConfigTest extends TestCase
 
     public function testParamsConfig(): void
     {
-        $this->assertArrayHasKey('secret', $this->config->getConfig());
-        $this->assertArrayHasKey('value', $this->config->getConfig()['secret']);
-        $this->assertSame($this->config->getConfig()['secret']['value'], 'veslo');
+        $this->assertArrayHasKey('secret', $this->config->getConfigArray());
+        $this->assertArrayHasKey('value', $this->config->getConfigArray()['secret']);
+        $this->assertSame($this->config->getConfigArray()['secret']['value'], 'veslo');
     }
 
     public function testParamsFallbackDefault(): void
     {
-        $this->assertArrayHasKey('satis', $this->config->getConfig());
-        $this->assertArrayHasKey('php', $this->config->getConfig()['satis']);
-        $this->assertSame($this->config->getConfig()['satis']['php'], '/usr/bin/php');
+        $this->assertArrayHasKey('satis', $this->config->getConfigArray());
+        $this->assertArrayHasKey('php', $this->config->getConfigArray()['satis']);
+        $this->assertSame($this->config->getConfigArray()['satis']['php'], '/usr/bin/php');
     }
 }

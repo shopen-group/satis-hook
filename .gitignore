@@ -6,6 +6,6 @@ composer.lock
 .idea
 
 # Dev files
-index.php
+hook.php
 temp
 config.yaml

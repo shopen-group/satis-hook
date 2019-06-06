@@ -3,6 +3,8 @@
 namespace ShopenGroup\SatisHook;
 
 use Nette;
+use ShopenGroup\SatisHook\Exception\ConfigException;
+use ShopenGroup\SatisHook\Exception\GeneralException;
 
 /**
  * Class Application
@@ -21,6 +23,11 @@ class Application implements IApplication
     private $request;
 
     /**
+     * @var RequestTypeResolver
+     */
+    private $requestTypeResolver;
+
+    /**
      * @var Nette\Http\Response
      */
     private $response;
@@ -33,10 +40,16 @@ class Application implements IApplication
     /**
      * Application constructor.
      */
-    public function __construct(Nette\Http\Request $request, Nette\Http\Response $response, string $configPath, string $hookFilesPath)
-    {
+    public function __construct(
+        Nette\Http\Request $request,
+        Nette\Http\Response $response,
+        RequestTypeResolver $requestTypeResolver,
+        string $configPath,
+        string $hookFilesPath
+    ) {
         $this->request = $request;
         $this->response = $response;
+        $this->requestTypeResolver = $requestTypeResolver;
 
         if (!is_dir($hookFilesPath) || !is_writable($hookFilesPath)) {
             $this->response->setCode(500);
@@ -47,8 +60,8 @@ class Application implements IApplication
         $this->hookFilesPath = $hookFilesPath;
 
         try {
-            $this->config = new \ShopenGroup\SatisHook\Config($configPath);
-        } catch (\ShopenGroup\SatisHook\Exception\ConfigException $configException) {
+            $this->config = new Config($configPath);
+        } catch (ConfigException $configException) {
             $this->response->setCode(500);
             echo $configException->getMessage();
             exit(1);
@@ -60,18 +73,19 @@ class Application implements IApplication
      */
     public function run(): void
     {
-        $hook = new \ShopenGroup\SatisHook\Hook($this->config, $this->request, $this->hookFilesPath);
+        $hook = new Hook($this->config, $this->request, $this->requestTypeResolver, $this->hookFilesPath);
 
         try {
             $hook->process();
             echo date('[Y-m-d H:i:s]') . ' Hook succeeded.';
-        } catch (Exception\SecurityException $securityException) {
-            $this->response->setCode($securityException->getCode());
-            echo $securityException->getMessage();
-            exit(1);
-        } catch (Exception\GeneralException $generalException) {
-            $this->response->setCode(500);
-            echo $generalException->getMessage();
+        } catch (GeneralException $e) {
+            if ($e->getCode() > 0) {
+                $this->response->setCode(400);
+            } else {
+                $this->response->setCode($e->getCode());
+            }
+
+            echo get_class($e) . ': ' . $e->getMessage();
             exit(1);
         }
     }
