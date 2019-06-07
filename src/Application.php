@@ -90,10 +90,10 @@ class Application implements ApplicationInterface
             $this->logger->info($msg);
             echo $msg;
         } catch (GeneralException $e) {
-            if ($e->getCode() > 0) {
-                $this->response->setCode(400);
-            } else {
+            if ($e->getCode() > 99 && $e->getCode() < 600) {
                 $this->response->setCode($e->getCode());
+            } else {
+                $this->response->setCode(400);
             }
 
             $msg = get_class($e) . ': ' . $e->getMessage();
