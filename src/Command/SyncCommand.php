@@ -68,19 +68,19 @@ class SyncCommand extends Command
 
             foreach ($finder as $file) {
                 try {
-                    $buildStartMsg = date('Y-m-d h:i:s') . ': Starting build ' . $file->getBasename();
+                    $buildStartMsg = 'Starting build ' . $file->getBasename();
                     $this->logger->info($buildStartMsg);
-                    $output->writeln($buildStartMsg);
+                    $output->writeln(date('Y-m-d h:i:s') . ': ' . $buildStartMsg);
 
                     $this->process->build((string)$file->getRealPath());
 
-                    $buildFinishMsg = '<info>' . date('Y-m-d H:i:s') . ': Build finished</info>';
+                    $buildFinishMsg = 'Build finished ' . $file->getBasename();
                     $this->logger->info($buildFinishMsg);
-                    $output->writeln($buildFinishMsg);
+                    $output->writeln('<info>' . date('Y-m-d H:i:s') . ': ' . $buildFinishMsg . '</info>');
                 } catch (GeneralException $e) {
-                    $errorMsg = '<error>' . $e->getMessage() . '</error>';
+                    $errorMsg = $e->getMessage() . ' ' . $file->getBasename();
                     $this->logger->error($errorMsg);
-                    $output->writeln($errorMsg);
+                    $output->writeln('<error>' . $errorMsg . '</error>');
                     exit(1);
                 }
             }
