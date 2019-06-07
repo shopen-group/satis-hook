@@ -2,6 +2,7 @@
 
 namespace ShopenGroup\SatisHook\Command;
 
+use Psr\Log\LoggerInterface;
 use ShopenGroup\SatisHook\Exception\GeneralException;
 use ShopenGroup\SatisHook\Process;
 use Symfony\Component\Console\Command\Command;
@@ -26,13 +27,19 @@ class SyncCommand extends Command
     private $process;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * SyncCommand constructor.
      */
-    public function __construct(Process $process, string $hookFilesPath)
+    public function __construct(Process $process, LoggerInterface $logger, string $hookFilesPath)
     {
         parent::__construct(null);
 
         $this->process = $process;
+        $this->logger = $logger;
         $this->hookFilesPath = $hookFilesPath;
     }
 
@@ -61,11 +68,19 @@ class SyncCommand extends Command
 
             foreach ($finder as $file) {
                 try {
-                    $output->writeln(date('Y-m-d h:i:s') . ': Starting build ' . $file->getBasename());
+                    $buildStartMsg = date('Y-m-d h:i:s') . ': Starting build ' . $file->getBasename();
+                    $this->logger->info($buildStartMsg);
+                    $output->writeln($buildStartMsg);
+
                     $this->process->build((string)$file->getRealPath());
-                    $output->writeln('<info>' . date('Y-m-d H:i:s') . ': Build finished</info>');
+
+                    $buildFinishMsg = '<info>' . date('Y-m-d H:i:s') . ': Build finished</info>';
+                    $this->logger->info($buildFinishMsg);
+                    $output->writeln($buildFinishMsg);
                 } catch (GeneralException $e) {
-                    $output->writeln('<error>' . $e->getMessage() . '</error>');
+                    $errorMsg = '<error>' . $e->getMessage() . '</error>';
+                    $this->logger->error($errorMsg);
+                    $output->writeln($errorMsg);
                     exit(1);
                 }
             }

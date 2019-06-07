@@ -19,7 +19,7 @@ class Application implements ApplicationInterface
     private $config;
 
     /**
-     * @var Nette\Http\Request
+     * @var Nette\Http\IRequest
      */
     private $request;
 
@@ -29,7 +29,7 @@ class Application implements ApplicationInterface
     private $requestTypeResolver;
 
     /**
-     * @var Nette\Http\Response
+     * @var Nette\Http\IResponse
      */
     private $response;
 
@@ -47,8 +47,8 @@ class Application implements ApplicationInterface
      * Application constructor.
      */
     public function __construct(
-        Nette\Http\Request $request,
-        Nette\Http\Response $response,
+        Nette\Http\IRequest $request,
+        Nette\Http\IResponse $response,
         RequestTypeResolver $requestTypeResolver,
         LoggerInterface $logger,
         string $configPath,

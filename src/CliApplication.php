@@ -65,6 +65,6 @@ class CliApplication implements ApplicationInterface
     private function registerCommands(): void
     {
         $process = new Process($this->config);
-        $this->consoleApplication->add(new SyncCommand($process, $this->hookFilesPath));
+        $this->consoleApplication->add(new SyncCommand($process, $this->logger, $this->hookFilesPath));
     }
 }

@@ -35,10 +35,12 @@ class Process
 
         try {
             $process->mustRun();
-            unlink($filePath);
         } catch (ProcessFailedException $exception) {
+            unlink($filePath);
             throw new GeneralException($exception->getMessage());
         }
+
+        unlink($filePath);
     }
 
 

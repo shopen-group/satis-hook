@@ -2,7 +2,7 @@
 
 namespace ShopenGroup\SatisHook;
 
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use ShopenGroup\SatisHook\Exception\ConfigException;
 use ShopenGroup\SatisHook\Exception\SecurityException;
 
@@ -13,7 +13,7 @@ use ShopenGroup\SatisHook\Exception\SecurityException;
 class Hook
 {
     /**
-     * @var Request
+     * @var IRequest
      */
     private $request;
 
@@ -35,7 +35,7 @@ class Hook
     /**
      * Hook constructor.
      */
-    public function __construct(Config $config, Request $request, RequestTypeResolver $requestTypeResolver, string $hookFilesPath)
+    public function __construct(Config $config, IRequest $request, RequestTypeResolver $requestTypeResolver, string $hookFilesPath)
     {
         $this->request = $request;
         $this->config = $config;
@@ -66,8 +66,6 @@ class Hook
 
             file_put_contents($filename, $repositoryUrl);
         }
-
-        unlink($filename);
     }
 
     /**
