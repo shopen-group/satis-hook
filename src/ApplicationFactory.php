@@ -14,6 +14,7 @@ class ApplicationFactory
     /**
      * @param string $configPath
      * @param string $hookFilesPath
+     * @param string $logsPath
      * @param int|null $argc
      * @return ApplicationInterface
      * @throws \Exception
