@@ -44,7 +44,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use ShopenGroup\SatisHook\ApplicationFactory;
 
-$application = ApplicationFactory::createApplication(__DIR__ . '/config.yaml', __DIR__ . '/temp', $argc);
+$application = ApplicationFactory::createApplication(__DIR__ . '/config.yaml', __DIR__ . '/temp', __DIR__ . '/logs', $argc);
 $application->run();
 ```
 
@@ -52,7 +52,7 @@ $application->run();
 
 ### Webhook
 The app is accepting GET and POST requests through `https://127.0.0.1/hook.php`.
-There is an optional parameter "repository". If the "repository" parameter is present in request you can build just one particular package - not necessarily all of them (`http:/127.0.0.1/hook.php?repository=package/name`).
+There is an optional parameter "build-all". If the "build-all" parameter is present in request you can build all packages not necessarily just one particular package (`http:/127.0.0.1/hook.php?repository=package/name`).
 
 ### Queue process
 There is a second "layer" of application - queue processing.
